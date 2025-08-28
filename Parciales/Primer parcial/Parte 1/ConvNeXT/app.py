@@ -20,7 +20,7 @@ def main():
     
     # Inicializar componentes
     db = ActaDatabase()
-    image_processor = ImageProcessor()  # Esta línea estaba corrupta
+    image_processor = ImageProcessor(True)  # Esta línea estaba corrupta
     model = load_model(args.model)
     
     if args.image:

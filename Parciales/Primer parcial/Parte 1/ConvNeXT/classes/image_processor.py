@@ -6,18 +6,31 @@ from torchvision import transforms
 from config.config import ZONES, MODEL_CONFIG
 
 class ImageProcessor:
-    def __init__(self):
+    def __init__(self, show_crops=False):
         self.transform = transforms.Compose([
             transforms.Grayscale(num_output_channels=3),
             transforms.Resize(MODEL_CONFIG['input_size']),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         ])
+        self.show_crops = show_crops
     
-    def crop_zone(self, image, zone_coords):
+    def crop_zone(self, image, zone_coords, zone_name: str="imagen recortada"):
         """Recorta una zona específica de la imagen"""
         xmin, ymin, xmax, ymax = map(int, zone_coords)
-        return image.crop((xmin, ymin, xmax, ymax))
+        cropped = image.crop((xmin, ymin, xmax, ymax))
+        
+        if self.show_crops and zone_name:
+            # Convertir a OpenCV para mostrar
+            cv_crop = np.array(cropped.convert('RGB'))
+            cv_crop = cv2.cvtColor(cv_crop, cv2.COLOR_RGB2BGR)
+            
+            # Mostrar la zona recortada
+            window_name = f"Zona: {zone_name}"
+            cv2.imshow(window_name, cv_crop)
+            cv2.waitKey(1000)  # Pequeña pausa para que se muestre la imagen
+        
+        return cropped
     
     def preprocess_digit(self, image):
         """Preprocesa la imagen del dígito para el modelo"""
