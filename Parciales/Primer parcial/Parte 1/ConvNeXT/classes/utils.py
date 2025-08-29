@@ -1,6 +1,9 @@
 import os
 from PIL import Image
 import matplotlib.pyplot as plt
+from classes.image_processor import ImageProcessor
+import torch.nn as nn
+from database.database import ActaDatabase
 from models.model import predict_digit
 
 def create_zone_groups():
@@ -43,7 +46,7 @@ def combine_digits(digits_list, model, image_processor):
     
     return int(number_str) if number_str else 0, confidence_sum / valid_digits
 
-def process_acta(image_path, model, image_processor, db):
+def process_acta(image_path: str, model: nn.Module, image_processor : ImageProcessor, db: ActaDatabase):
     """Procesa un acta completa"""
     from PIL import Image
     

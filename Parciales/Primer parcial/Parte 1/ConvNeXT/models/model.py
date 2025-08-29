@@ -54,9 +54,9 @@ def load_model(model_path=None, num_classes=10):
 def predict_digit(model, image_tensor):
     """Predice el dígito de una imagen"""
     with torch.no_grad():
-        output = model(image_tensor.unsqueeze(0).to(MODEL_CONFIG['device']))
-        probabilities = torch.nn.functional.softmax(output, dim=1)
-        predicted = output.argmax(dim=1).item()
+        output = model(image_tensor.unsqueeze(0).to(MODEL_CONFIG['device'])) #añadimos batchsize de 1 (1,C,H,W)
+        probabilities = torch.nn.functional.softmax(output, dim=1) #calculo de probabilidades, asegurando que sumen 1 dim=1
+        predicted = output.argmax(dim=1).item() #encuantra la clase del 1 al 9 con mayor logit
         confidence = probabilities[0][predicted].item()
     
     return predicted, confidence

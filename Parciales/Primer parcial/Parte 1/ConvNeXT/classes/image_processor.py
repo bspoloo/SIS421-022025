@@ -35,18 +35,18 @@ class ImageProcessor:
     def preprocess_digit(self, image):
         """Preprocesa la imagen del dígito para el modelo"""
         # Convertir a OpenCV para procesamiento
-        cv_image = np.array(image.convert('L'))
+        cv_image = np.array(image.convert('L')) #escala de grises de 8 bits
         
         # Aplicar threshold
-        _, thresh = cv2.threshold(cv_image, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+        _, thresh = cv2.threshold(cv_image, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU) # invierte colores, el digito aparezca en blaco en fondos negros
         
         # Encontrar contornos y obtener ROI
-        contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) #encuentra contornos externos
         
         if contours:
             # Encontrar el contorno más grande (presumiblemente el dígito)
             cnt = max(contours, key=cv2.contourArea)
-            x, y, w, h = cv2.boundingRect(cnt)
+            x, y, w, h = cv2.boundingRect(cnt) #calcula el rectangulo limitador
             
             # Recortar el dígito
             digit_roi = thresh[y:y+h, x:x+w]
@@ -62,8 +62,11 @@ class ImageProcessor:
                 
                 # Redimensionar a tamaño del modelo
                 resized = cv2.resize(padded, MODEL_CONFIG['input_size'])
+                
+                #convertimos a formato PL
                 return Image.fromarray(resized)
-        
+
+        #caso de no encontrar contornos validos
         return image
     
     def extract_digits_from_zones(self, image_path, zone_groups):

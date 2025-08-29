@@ -18,74 +18,28 @@ def horizontal_flip(img):
     return F.hflip(img)
 
 def train_digit_recognizer():
-    # Transformaciones con data augmentation para regularización
-    train_transform = transforms.Compose([
-        transforms.RandomRotation(5),  # Regularización: aumento de datos
-        transforms.RandomAffine(degrees=0, translate=(0.1, 0.1)),  # Pequeñas translaciones
-        transforms.Resize((64, 64)),
-        transforms.Lambda(rotate_90_degrees),  # EMNIST está rotado
-        transforms.Lambda(horizontal_flip),  # EMNIST está volteado
-        transforms.Grayscale(num_output_channels=3),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-    ])
-    
-    test_transform = transforms.Compose([
-        transforms.Resize((64, 64)),
-        transforms.Lambda(rotate_90_degrees),  # EMNIST está rotado
-        transforms.Lambda(horizontal_flip),  # EMNIST está volteado
-        transforms.Grayscale(num_output_channels=3),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-    ])
+
     
     print("Cargando dataset EMNIST...")
-    
     # Cargar datasets EMNIST - usando 'digits' para solo dígitos (0-9)
-    try:
-        train_dataset = datasets.EMNIST(
-            root='./data', 
-            split='digits',  # Solo dígitos: 0-9
-            train=True, 
-            download=True, 
-            transform=train_transform
-        )
-        
-        test_dataset = datasets.EMNIST(
-            root='./data', 
-            split='digits',  # Solo dígitos: 0-9
-            train=False, 
-            download=True, 
-            transform=test_transform
-        )
-        
-        print(f"✓ EMNIST cargado: {len(train_dataset)} ejemplos de entrenamiento, {len(test_dataset)} de prueba")
-        print(f"✓ Clases: {train_dataset.classes}")
-        
-    except Exception as e:
-        print(f"Error cargando EMNIST: {e}")
-        print("Intentando con MNIST como fallback...")
-        
-        # Fallback a MNIST sin las transformaciones de rotación
-        train_transform = transforms.Compose([
-            transforms.RandomRotation(5),
-            transforms.RandomAffine(degrees=0, translate=(0.1, 0.1)),
-            transforms.Resize((64, 64)),
-            transforms.Grayscale(num_output_channels=3),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-        ])
-        
-        test_transform = transforms.Compose([
-            transforms.Resize((64, 64)),
-            transforms.Grayscale(num_output_channels=3),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-        ])
-        
-        train_dataset = datasets.MNIST(root='./data', train=True, download=True, transform=train_transform)
-        test_dataset = datasets.MNIST(root='./data', train=False, download=True, transform=test_transform)
-        print("✓ MNIST cargado como fallback")
+    train_dataset = datasets.EMNIST(
+        root='./data', 
+        split='digits',  # Solo dígitos: 0-9
+        train=True, 
+        download=True, 
+        transform=train_transform
+    )
+    
+    test_dataset = datasets.EMNIST(
+        root='./data', 
+        split='digits',  # Solo dígitos: 0-9
+        train=False, 
+        download=True, 
+        transform=test_transform
+    )
+    
+    print(f"✓ EMNIST cargado: {len(train_dataset)} ejemplos de entrenamiento, {len(test_dataset)} de prueba")
+    print(f"✓ Clases: {train_dataset.classes}")
     
     # DataLoaders - SIN multiprocessing para Windows
     train_loader = DataLoader(
