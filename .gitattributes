@@ -1,0 +1,2 @@
+Parciales/Primer[[:space:]]parcial/Parte[[:space:]]1/ConvNeXT/models/best_model.pth filter=lfs diff=lfs merge=lfs -text
+Parciales/Primer[[:space:]]parcial/Parte[[:space:]]1/ConvNeXT/models/digit_recognizer.pth filter=lfs diff=lfs merge=lfs -text

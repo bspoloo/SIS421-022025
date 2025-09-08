@@ -1,0 +1,2 @@
+precision,recall,f1-score,support,dataset
+0.9967304490769251,0.996725,0.9967253763614253,40000.0,EMNIST

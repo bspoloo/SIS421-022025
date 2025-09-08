@@ -1,0 +1,10 @@
+Parciales/Primer parcial/Parte 1/ConvNeXT/data/
+Parciales/Primer parcial/Parte 1/ConvNeXT/actas/Actas 2025/
+Laboratorios/Laboratorio 5/lightning_logs
+#indicar que no sean pth
+*.pth
+# Ignorar archivos de checkpoints de modelos entrenados
+*.ckpt
+
+# Ignorar archivos pycache
+**/__pycache__/
