@@ -1,0 +1,5 @@
+dropout: 0.3
+n_embd: 768
+n_heads: 16
+num_classes: 5
+seq_len: 196

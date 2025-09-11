@@ -1,0 +1,4 @@
+dropout: 0.3
+n_embd: 768
+num_classes: 5
+seq_len: 196
