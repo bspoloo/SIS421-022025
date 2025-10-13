@@ -1,10 +1,35 @@
-Parciales/Primer parcial/Parte 1/ConvNeXT/data/
-Parciales/Primer parcial/Parte 1/ConvNeXT/actas/Actas 2025/
-Laboratorios/Laboratorio 5/lightning_logs
-#indicar que no sean pth
-*.pth
-# Ignorar archivos de checkpoints de modelos entrenados
-*.ckpt
+# Datasets y archivos grandes
+**/data/
+**/VOC2012/
+**/lightning_logs/
 
-# Ignorar archivos pycache
+# Archivos de modelos entrenados
+*.pth
+*.ckpt
+*.pt
+*.bin
+
+# Archivos temporales y caché
 **/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Jupyter
+.ipynb_checkpoints
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
