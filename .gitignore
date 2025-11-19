@@ -33,3 +33,6 @@ logs/
 .idea/
 *.swp
 *.swo
+
+/Laboratorios/Laboratorio 4/data
+/datasets
